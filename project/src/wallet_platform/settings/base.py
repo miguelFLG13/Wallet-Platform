@@ -110,4 +110,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'wallet_platform/static'),
 ]
 
+ROOT_URLCONF = 'wallet_platform.urls.urls_pro'
+
 AUTH_USER_MODEL = "users.User"
