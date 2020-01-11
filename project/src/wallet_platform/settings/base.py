@@ -30,7 +30,8 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'users',
+    'wallets'
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + PROJECT_APPS
@@ -108,3 +109,5 @@ AUTHENTICATION_BACKENDS = (
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'wallet_platform/static'),
 ]
+
+AUTH_USER_MODEL = "users.User"
