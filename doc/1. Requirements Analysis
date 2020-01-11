@@ -1,0 +1,7 @@
+1. System will have to create a customer with a cutomer wallet
+2. System will have to create some unique customer wallets related with a customer
+3. System will have to charge money on a wallet to a customer
+4. System will have to check the wallet status
+5. System will have to show the user wallet movements to the user
+6. System will have to create a commerce with a commerce wallet
+7. System will have to transfer money from customer wallet to a commerce wallet
