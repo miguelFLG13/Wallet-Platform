@@ -11,3 +11,5 @@ CACHES = {
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
 }
+
+ROOT_URLCONF = 'wallet_platform.urls.urls_local'

@@ -3,4 +3,5 @@ from django.conf.urls import include
 
 
 urlpatterns = [
+    path('user/', include('users.urls')),
 ]
