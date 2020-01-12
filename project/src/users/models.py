@@ -21,6 +21,28 @@ class User(PolymorphicModel, AbstractUser):
     def __str__(self):
         return self.username
 
+    def is_customer(self):
+        """
+        Check if a user is a customer
+
+        :return: if is a customer
+        :return type: bool
+        """
+        if self.polymorphic_ctype.model == 'customer':
+            return True
+        return False
+
+    def is_commerce(self):
+        """
+        Check if a user is a commerce
+
+        :return: if is a commerce
+        :return type: bool
+        """
+        if self.polymorphic_ctype.model == 'commerce':
+            return True
+        return False
+
 
 class Customer(User):
     """

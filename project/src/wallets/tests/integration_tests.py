@@ -30,3 +30,45 @@ class PostWalletTest(APITestCase):
             generate_test_token(self.application, mommy.make('users.commerce')))}
         response = self.client.post(self.url, **headers)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class GetWalletTest(APITestCase):
+    """ Test module for POST a Wallet API """
+
+    def setUp(self):
+        self.application = generate_test_application()
+
+    def test_get_customer_wallet_valid(self):
+        customer = mommy.make('users.customer')
+        wallet = mommy.make(
+            'wallets.customerwallet',
+            customer=customer,
+        )
+        url = reverse('wallet', args=[wallet.uuid])
+        headers = {"Authorization": "Bearer {}".format(
+            generate_test_token(self.application, customer))}
+        response = self.client.get(url, **headers)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(uuid.UUID(response.data['uuid']), wallet.uuid)
+
+    def test_get_customer_wallet_incorrect_user_invalid(self):
+        wallet = mommy.make(
+            'wallets.customerwallet',
+            customer=mommy.make('users.customer'),
+        )
+        url = reverse('wallet', args=[wallet.uuid])
+        customer = mommy.make('users.customer')
+        mommy.make('wallets.customerwallet', customer=customer)
+        headers = {"Authorization": "Bearer {}".format(
+            generate_test_token(self.application, mommy.make('users.customer')))}
+        response = self.client.get(url, **headers)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_get_customer_wallet_incorrect_uuid_invalid(self):
+        url = reverse('wallet', args=[uuid.uuid4()])
+        customer = mommy.make('users.customer')
+        mommy.make('wallets.customerwallet', customer=customer)
+        headers = {"Authorization": "Bearer {}".format(
+            generate_test_token(self.application, customer))}
+        response = self.client.get(url, **headers)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
