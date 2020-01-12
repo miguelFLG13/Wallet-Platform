@@ -51,7 +51,20 @@ class GetWalletTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(uuid.UUID(response.data['uuid']), wallet.uuid)
 
-    def test_get_customer_wallet_incorrect_user_invalid(self):
+    def test_get_commerce_wallet_valid(self):
+        commerce = mommy.make('users.commerce')
+        wallet = mommy.make(
+            'wallets.commercewallet',
+            commerce=commerce,
+        )
+        url = reverse('wallet', args=[wallet.uuid])
+        headers = {"Authorization": "Bearer {}".format(
+            generate_test_token(self.application, commerce))}
+        response = self.client.get(url, **headers)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(uuid.UUID(response.data['uuid']), wallet.uuid)
+
+    def test_get_wallet_incorrect_user_invalid(self):
         wallet = mommy.make(
             'wallets.customerwallet',
             customer=mommy.make('users.customer'),
@@ -64,7 +77,7 @@ class GetWalletTest(APITestCase):
         response = self.client.get(url, **headers)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_get_customer_wallet_incorrect_uuid_invalid(self):
+    def test_get_wallet_incorrect_uuid_invalid(self):
         url = reverse('wallet', args=[uuid.uuid4()])
         customer = mommy.make('users.customer')
         mommy.make('wallets.customerwallet', customer=customer)
