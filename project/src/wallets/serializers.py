@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError
 
 from .models import Operation, Wallet
 
@@ -15,6 +15,15 @@ class OperationSerializer(ModelSerializer):
 
     class Meta:
         model = Operation
-        fields = ('uuid', 'uuid', 'type', 'status', 'from_wallet',
-                  'to_wallet')
-        read_only_fields = ('__all__', )
+        fields = ('uuid', 'type', 'status', 'from_wallet',
+                  'to_wallet', 'money', )
+        read_only_fields = ('uuid', 'type', 'status', 'from_wallet',
+                            'to_wallet', )
+
+    def validate_money(self, value):
+        """
+        Check if money is correct
+        """
+        if value < 0 or value >= 10000:
+            raise ValidationError("Incorrect Money")
+        return value

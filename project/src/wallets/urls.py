@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import OperationsListView, WalletCreateView, WalletRetrieveView
+from .views import (OperationChargeCreateView, OperationsListView,
+                    WalletCreateView, WalletRetrieveView)
 
 
 urlpatterns = [
@@ -10,5 +11,10 @@ urlpatterns = [
         '<uuid:uuid>/operations/',
         OperationsListView.as_view(),
         name='operations'
+    ),
+    path(
+        '<uuid:uuid>/operations/charge/',
+        OperationChargeCreateView.as_view(),
+        name='charge_operation'
     ),
 ]
