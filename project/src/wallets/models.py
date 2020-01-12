@@ -43,7 +43,7 @@ class CommerceWallet(Wallet):
     """
     commerce = models.OneToOneField(
         'users.Commerce',
-        related_name='wallets',
+        related_name='wallet',
         on_delete=models.CASCADE
     )
 
