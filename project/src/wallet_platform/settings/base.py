@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'oauth2_provider',
     'rest_framework',
 ]
 
@@ -99,6 +100,9 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
 
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
 }
 
 
