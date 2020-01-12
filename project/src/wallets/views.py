@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
+from .serializers import WalletSerializer
+
+from utils.permissions import IsCustomer
+
+
+class WalletCreateView(CreateAPIView):
+    serializer_class = WalletSerializer
+    permission_classes = (IsAuthenticated, IsCustomer, )
