@@ -1,0 +1,2 @@
+class ApplyChargeException(Exception):
+    pass

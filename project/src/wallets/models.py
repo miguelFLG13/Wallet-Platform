@@ -1,7 +1,11 @@
 import uuid
+from decimal import Decimal
 from polymorphic.models import PolymorphicModel
 
+from django.core.validators import MinValueValidator
 from django.db import models
+
+from .exceptions import ApplyChargeException
 
 
 class Wallet(PolymorphicModel):
@@ -15,11 +19,16 @@ class Wallet(PolymorphicModel):
     money = models.DecimalField(
         max_digits=6,
         decimal_places=2,
-        default=0
+        default=0,
+        validators=[MinValueValidator(Decimal('0.01'))]
     )
 
     def __str__(self):
         return str(self.uuid)
+
+    def apply_operation(self, money):
+        self.money += money
+        self.save()
 
 
 class CustomerWallet(Wallet):
@@ -98,6 +107,12 @@ class Operation(models.Model):
         blank=True,
         null=True
     )
+    money = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=0,
+        validators=[MinValueValidator(Decimal('0.01'))]
+    )
 
     class Meta:
         ordering = ['type']
@@ -105,3 +120,17 @@ class Operation(models.Model):
 
     def __str__(self):
         return str(self.uuid)
+
+    def apply(self):
+        if self.status != self.DONE:
+            try:
+                if self.to_wallet:
+                    self.to_wallet.apply_operation(self.money)
+
+                if self.from_wallet:
+                    self.from_wallet.apply_operation(self.money*-1)
+                self.status = self.DONE
+                self.save()
+            except Exception:
+                self.status = self.ERROR
+                raise ApplyChargeException("Incorrect Operation")
