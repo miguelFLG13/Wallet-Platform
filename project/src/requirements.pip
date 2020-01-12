@@ -3,6 +3,7 @@ Django==2.2.7
 djangorestframework==3.10.3
 django-extensions==2.1.4
 django-filter==2.1.0
+django-oauth-toolkit==1.2.0
 django-polymodels==1.4.6
 django-polymorphic==2.0.3
 gunicorn==19.9.0
