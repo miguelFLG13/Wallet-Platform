@@ -41,6 +41,7 @@ Al plantear el modelo de datos, por una parte, los usuarios los divido en dos: C
  - He supuesto que cualquier User puede cargar un Wallet aunque no sea suyo, de esta forma los comercios con esta misma petición podrían incluso hacer una devolución o se podría utilizar tipo bizum, para pasar dinero entre Customers. Aunque para que esto fuera más correcto se deberían generar otros endpoints y deberían ser otro tipo de operación.
  - No testeo `get_operation_by_wallet_uuid` porque implicitamente está testado con los tests de integración en este momento.
  - Para asegurarme que las transacciones sean atómicas he utilizado el decorador `transaction.atomic` sobre el sevice que realiza la transacción.
+ - Finalmente no me da tiempo a completar el último endpoint, lo realizaría de una manera muy parecida al de Charge del Wallet, pero podría explicaros con más detalle lo que tengo en la cabeza si quisierais.
 
 1.​ Desplegar el proyecto en la instancia proporcionada.
 
