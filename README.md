@@ -67,3 +67,5 @@ De hecho, hasta Redis es una db NoSQL.
 5.​ ¿Qué tipo de métricas y servicios nos pueden ayudar a comprobar que la API y el servidor funcionan correctamente?
 
 Yo he trabajado con diferentes herramientas de monitoriación de servidores y detección de errores que nos hacen la vida mucho más fácil a los desarrolladores: Data Dog, Cloudwatch, Sentry...
+
+**Para conocerme un poco más y saber en que he estado trabajando los tres últimos anos os recomiendo ver este meetup en el que lo explico:** https://www.youtube.com/watch?v=pEVzDwJJdOI&feature=youtu.be&t=709
